@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Implements
 {
-    public class ProductRepository : GenericRepository<Product> , IProductRepository
+    public class OrderItemRepository : GenericRepository<OrderItem> ,IOrderItemRepository
     {
-        
+       
     }
 }

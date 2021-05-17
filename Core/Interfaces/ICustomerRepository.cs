@@ -6,8 +6,7 @@ using System.Text;
 
 namespace Core.Interfaces
 {
-    public interface IProductRepository : IGenericRepository<Product>
+    public interface ICustomerRepository : IGenericRepository<Customer>
     {
-
     }
 }

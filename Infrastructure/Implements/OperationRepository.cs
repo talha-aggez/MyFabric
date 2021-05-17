@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Implements
 {
-    public class ProductRepository : GenericRepository<Product> , IProductRepository
+    public class OperationRepository : GenericRepository<Operation> , IOperationRepository
     {
         
     }

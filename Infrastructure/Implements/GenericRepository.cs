@@ -12,12 +12,6 @@ namespace MyFabric.Infrastructure.Implements
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class, new()
     {
-        private readonly StoreContext _context;
-        public GenericRepository(StoreContext context)
-        {
-            _context = context;
-        }
-
         public async Task AddAsync(T entity)
         {
             using var context = new StoreContext();
