@@ -1,3 +1,5 @@
+using Core.Interfaces;
+using Infrastructure.Implements;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +30,17 @@ namespace MyFabric
             //services.AddControllers();
             services.AddControllers().AddNewtonsoftJson(opt =>
             opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddScoped<ICustomerRepository, CustomerRepository>(); //dependency injection için gerekli
+            services.AddScoped<IOperationRepository, OperationRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
+            services.AddScoped<ISubProductTreeRepository, SubProductTreeRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IWorkCenterRepository, WorkCenterRepository>();
+            services.AddScoped<IWorkCenterOperationRepository, WorkCenterOperationRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

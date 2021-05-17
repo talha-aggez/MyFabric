@@ -48,5 +48,4 @@ namespace MyFabric.Infrastructure.Implements
         }
     }
 }
-}
 
