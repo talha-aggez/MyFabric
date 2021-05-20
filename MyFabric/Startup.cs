@@ -31,6 +31,14 @@ namespace MyFabric
             services.AddControllers().AddNewtonsoftJson(opt =>
             opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
+
             services.AddScoped<ICustomerRepository, CustomerRepository>(); //dependency injection için gerekli
             services.AddScoped<IOperationRepository, OperationRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
@@ -50,7 +58,7 @@ namespace MyFabric
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
 
             app.UseRouting();
