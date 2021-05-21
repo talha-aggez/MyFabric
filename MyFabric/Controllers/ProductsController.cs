@@ -2,6 +2,7 @@
 using Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyFabric.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,17 @@ namespace MyFabric.Controllers
         {
             var products = await _productRepository.GetAllAsync();
             return Ok(products);
+        }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetProductWithProductType()
+        {
+            var products = await _productRepository.GetProductWithProductTypeAsync();
+            List<ProductWithProductTypeDto> listProduct = new List<ProductWithProductTypeDto>();
+            foreach (var item in products)
+            {
+                listProduct.Add(new ProductWithProductTypeDto { ProductName=item.ProductName,IsSalable=item.IsSalable,ProductId=item.ID,ProductTypeID=item.ProductTypeID,ProductTypeName=item.ProductType.Name});
+            }
+            return Ok(listProduct);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByID(int id)
@@ -55,9 +67,11 @@ namespace MyFabric.Controllers
             if (tempProduct != null)
             {
                 await _productRepository.RemoveAsync(id);
-                return NoContent();
+                return Ok("Silme işlemi başarılı");
             }
             return BadRequest("Müşteri Bulunamadı");
         }
+
+
     }
 }
