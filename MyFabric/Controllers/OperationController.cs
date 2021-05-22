@@ -1,5 +1,6 @@
 ﻿using Core.DBModels;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,39 +11,39 @@ namespace MyFabric.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductTypeController : ControllerBase
+    public class OperationController : ControllerBase
     {
-        private readonly IProductTypeRepository _productTypeRepository;
-        public ProductTypeController(IProductTypeRepository productTypeRepository)
+        private readonly IOperationRepository _operationRepository;
+        public OperationController(IOperationRepository operationRepository)
         {
-            _productTypeRepository = productTypeRepository;
+            _operationRepository = operationRepository;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var productType = await _productTypeRepository.GetAllAsync();
+            var productType = await _operationRepository.GetAllAsync();
             return Ok(productType);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByID(int id)
         {
-            var productType = await _productTypeRepository.FindByIdAsync(id);
+            var productType = await _operationRepository.FindByIdAsync(id);
             return Ok(productType);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateProduct(ProductType productType)
+        public async Task<IActionResult> CreateProduct(Operation productType)
         {
-            await _productTypeRepository.AddAsync(productType);
+            await _operationRepository.AddAsync(productType);
             return Ok("Eklendi başarıyla");
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateProduct(ProductType product)
+        public async Task<IActionResult> UpdateProduct(Operation product)
         {
-            var tempproductTypeRepository = await _productTypeRepository.FindByIdAsync(product.ID);
+            var tempproductTypeRepository = await _operationRepository.FindByIdAsync(product.ID);
             if (tempproductTypeRepository != null)
             {
-                await _productTypeRepository.UpdateAsync(product);
+                await _operationRepository.UpdateAsync(product);
                 return Ok(product);
             }
             return BadRequest("Müşteri Bulunamadı");
@@ -50,10 +51,10 @@ namespace MyFabric.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            var tempproductTypeRepository = await _productTypeRepository.FindByIdAsync(id);
+            var tempproductTypeRepository = await _operationRepository.FindByIdAsync(id);
             if (tempproductTypeRepository != null)
             {
-                await _productTypeRepository.RemoveAsync(id);
+                await _operationRepository.RemoveAsync(id);
                 return Ok("Silme işlemi başarılı");
             }
             return BadRequest("Müşteri Bulunamadı");
