@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Core.Interfaces
 {
-    public interface IWorkCenterOperationRepository : IGenericRepository<Product>
+    public interface IWorkCenterOperationRepository : IGenericRepository<WorkCenterOperation>
     {
 
     }
