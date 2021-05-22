@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Implements
 {
-    public class CustomerRepository : GenericRepository<Customer> ,ICustomerRepository
+    public class OrderItemRepository : GenericRepository<OrderItem> ,IOrderItemRepository
     {
        
     }

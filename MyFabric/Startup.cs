@@ -1,5 +1,8 @@
 using Core.Interfaces;
 using Infrastructure.Implements;
+using Infrastructure.JWTUtility;
+using Infrastructure.StringInfos;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,9 +11,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MyFabric
@@ -39,16 +44,37 @@ namespace MyFabric
                         .AllowAnyHeader());
             });
 
-            services.AddScoped<ICustomerRepository, CustomerRepository>(); //dependency injection için gerekli
+            services.AddScoped<IAppUserRepository, AppUserRepository>(); //dependency injection için gerekli
+
+            services.AddScoped<IAppRoleRepository, AppRoleRepository>();
+
+            services.AddScoped<IAppUserRoleRepository, AppUserRoleRepository>();
             services.AddScoped<IOperationRepository, OperationRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IJwtService, JwtManager>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
             services.AddScoped<ISubProductTreeRepository, SubProductTreeRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IWorkCenterRepository, WorkCenterRepository>();
             services.AddScoped<IWorkCenterOperationRepository, WorkCenterOperationRepository>();
+
+
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+            {
+                opt.RequireHttpsMetadata = false;
+                opt.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidIssuer = JWTInfo.Issuer,
+                    ValidAudience = JWTInfo.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWTInfo.SecurityKey)), // key deðerini belirle
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +89,8 @@ namespace MyFabric
 
             app.UseRouting();
             app.UseStaticFiles();
+           
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

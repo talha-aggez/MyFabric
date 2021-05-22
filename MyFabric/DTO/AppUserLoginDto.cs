@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Core.DBModels
+namespace MyFabric.DTO
 {
-    public class User
+    public class AppUserLoginDto
     {
-        public int ID { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
     }

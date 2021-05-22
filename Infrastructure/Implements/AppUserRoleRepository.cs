@@ -4,12 +4,10 @@ using MyFabric.Infrastructure.Implements;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Implements
 {
-    public class OrderItemRepository : GenericRepository<OrderItem> ,IOrderItemRepository
+    public class AppUserRoleRepository : GenericRepository<AppUserRole>, IAppUserRoleRepository
     {
-       
     }
 }

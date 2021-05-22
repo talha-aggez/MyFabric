@@ -10,7 +10,7 @@ namespace Core.DBModels
         public int CustomerID { get; set; }
         public DateTime? OrderDate { get; set; }
         public DateTime? DeadLine { get; set; }
-        public Customer Customer { get; set; }
+        public AppUser AppUser { get; set; }
         public virtual List<OrderItem> OrderItems { get; set; }
     }
 }
