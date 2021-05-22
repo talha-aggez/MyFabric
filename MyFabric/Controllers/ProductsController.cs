@@ -1,5 +1,6 @@
 ﻿using Core.DBModels;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyFabric.DTO;
@@ -21,6 +22,7 @@ namespace MyFabric.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             var products = await _productRepository.GetAllAsync();

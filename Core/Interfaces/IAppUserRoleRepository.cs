@@ -6,8 +6,7 @@ using System.Text;
 
 namespace Core.Interfaces
 {
-    public interface IUserRepository : IGenericRepository<User>
+    public interface IAppUserRoleRepository: IGenericRepository<AppUserRole>
     {
-
     }
 }
