@@ -16,14 +16,14 @@ namespace Infrastructure.Implements
         public async Task<List<Product>> GetProductNotSalableAsync()
         {
             using var context = new StoreContext();
-            return await context.Products.Where(p=> p.IsSalable==false).ToListAsync();
-
+            return await context.Products.Include(p => p.ProductType).Where(p=> p.IsSalable==false).ToListAsync();
+                    
         }
 
         public async Task<List<Product>> GetProductSalableAsync()
         {
             using var context = new StoreContext();
-            return await context.Products.Where(p => p.IsSalable == true).ToListAsync();
+            return await context.Products.Include(p => p.ProductType).Where(p => p.IsSalable == true).ToListAsync();
         }
 
         public async Task<List<Product>> GetProductWithProductTypeAsync()

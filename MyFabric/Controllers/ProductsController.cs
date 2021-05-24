@@ -23,7 +23,7 @@ namespace MyFabric.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> GetAll()
         {
             var products = await _productRepository.GetAllAsync();
@@ -41,7 +41,7 @@ namespace MyFabric.Controllers
             return Ok(listProduct);
         }
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetProductNotSalableAsync()
+        public async Task<IActionResult> GetProductNotSalable()
         {
             var products = await _productRepository.GetProductNotSalableAsync();
             List<ProductWithProductTypeDto> listProduct = new List<ProductWithProductTypeDto>();
@@ -53,7 +53,7 @@ namespace MyFabric.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetProductSalableAsync()
+        public async Task<IActionResult> GetProductSalable()
         {
             var products = await _productRepository.GetProductSalableAsync();
             List<ProductWithProductTypeDto> listProduct = new List<ProductWithProductTypeDto>();
