@@ -20,6 +20,12 @@ namespace Infrastructure.Implements
 
         }
 
+        public async Task<List<Product>> GetProductSalableAsync()
+        {
+            using var context = new StoreContext();
+            return await context.Products.Where(p => p.IsSalable == true).ToListAsync();
+        }
+
         public async Task<List<Product>> GetProductWithProductTypeAsync()
         {
             using var context = new StoreContext();

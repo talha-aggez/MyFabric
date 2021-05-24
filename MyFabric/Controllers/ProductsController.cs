@@ -51,6 +51,19 @@ namespace MyFabric.Controllers
             }
             return Ok(listProduct);
         }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetProductSalableAsync()
+        {
+            var products = await _productRepository.GetProductSalableAsync();
+            List<ProductWithProductTypeDto> listProduct = new List<ProductWithProductTypeDto>();
+            foreach (var item in products)
+            {
+                listProduct.Add(new ProductWithProductTypeDto { ProductName = item.ProductName, IsSalable = item.IsSalable, ProductId = item.ID, ProductTypeID = item.ProductTypeID, ProductTypeName = item.ProductType.Name });
+            }
+            return Ok(listProduct);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByID(int id)
         {
