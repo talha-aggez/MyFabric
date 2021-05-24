@@ -7,6 +7,7 @@ namespace MyFabric.DTO
 {
     public class SubProductWithAllDto
     {
+        public int ID { get; set; }
         public int SubProductId { get; set; }
         public string SubProductName { get; set; }
 

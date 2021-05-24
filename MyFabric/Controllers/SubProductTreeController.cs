@@ -72,7 +72,7 @@ namespace MyFabric.Controllers
             {
                 var temp =await _productRepository.FindByIdAsync(item.SubProductID);
                
-                listProduct.Add(new SubProductWithAllDto { Amount=item.Amount,ProductId=item.ProductID,SubProductId=item.SubProductID,ProductName=item.Product.ProductName,SubProductName= temp.ProductName });
+                listProduct.Add(new SubProductWithAllDto { ID=item.ID,Amount=item.Amount,ProductId=item.ProductID,SubProductId=item.SubProductID,ProductName=item.Product.ProductName,SubProductName= temp.ProductName });
             }
             return Ok(listProduct);
         }
