@@ -40,6 +40,21 @@ namespace MyFabric.Controllers
             }
             return Ok(listProduct);
         }
+        public async Task<IActionResult> GetProductNotSalableAsync()
+        {
+            var products = await _productRepository.GetProductNotSalableAsync();
+            List<ProductWithProductTypeDto> listProduct = new List<ProductWithProductTypeDto>();
+            foreach (var item in products)
+            {
+                listProduct.Add(new ProductWithProductTypeDto { ProductName = item.ProductName, IsSalable = item.IsSalable, ProductId = item.ID, ProductTypeID = item.ProductTypeID, ProductTypeName = item.ProductType.Name });
+            }
+            return Ok(listProduct);
+        }
+
+
+
+        
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByID(int id)
         {
