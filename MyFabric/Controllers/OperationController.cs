@@ -2,6 +2,7 @@
 using Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyFabric.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,20 @@ namespace MyFabric.Controllers
             await _operationRepository.AddAsync(productType);
             return Ok("Eklendi başarıyla");
         }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetProductWithProductType()
+        {
+            var operations = await _operationRepository.GetOperationWithProductTypeAsync();
+            List<OperationWithProductTypeDto> listOperations = new List<OperationWithProductTypeDto>();
+            foreach (var item in operations)
+            {
+                listOperations.Add(new OperationWithProductTypeDto { ID=item.ID,Name=item.Name,ProductTypeID=item.ProductTypeID,ProductTypeName=item.ProductType.Name });
+            }
+            return Ok(listOperations);
+        }
+
+
         [HttpPut]
         public async Task<IActionResult> UpdateProduct(Operation product)
         {
