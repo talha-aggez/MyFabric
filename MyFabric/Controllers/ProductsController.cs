@@ -40,6 +40,7 @@ namespace MyFabric.Controllers
             }
             return Ok(listProduct);
         }
+        [HttpGet("[action]")]
         public async Task<IActionResult> GetProductNotSalableAsync()
         {
             var products = await _productRepository.GetProductNotSalableAsync();
@@ -50,11 +51,6 @@ namespace MyFabric.Controllers
             }
             return Ok(listProduct);
         }
-
-
-
-        
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByID(int id)
         {
