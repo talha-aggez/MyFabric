@@ -40,7 +40,7 @@ namespace MyFabric.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetProductWithProductType()
+        public async Task<IActionResult> GetOperationWithProductType()
         {
             var operations = await _operationRepository.GetOperationWithProductTypeAsync();
             List<OperationWithProductTypeDto> listOperations = new List<OperationWithProductTypeDto>();
