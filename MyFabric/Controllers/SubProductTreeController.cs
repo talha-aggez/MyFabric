@@ -2,6 +2,7 @@
 using Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyFabric.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,11 @@ namespace MyFabric.Controllers
     public class SubProductTreeController : ControllerBase
     {
         private readonly ISubProductTreeRepository _subProductTreeRepository;
-        public SubProductTreeController(ISubProductTreeRepository operationRepository)
+        private readonly IProductRepository _productRepository;
+        public SubProductTreeController(ISubProductTreeRepository operationRepository, IProductRepository productRepository)
         {
             _subProductTreeRepository = operationRepository;
+            _productRepository = productRepository;
         }
 
         [HttpGet]
@@ -58,6 +61,20 @@ namespace MyFabric.Controllers
                 return Ok("Silme işlemi başarılı");
             }
             return BadRequest("Müşteri Bulunamadı");
+        }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetSubProductTreeWithAll()
+        {
+            var products = await _subProductTreeRepository.GetSubProductTreeWithAllAsync();
+            
+            List<SubProductWithAllDto> listProduct = new List<SubProductWithAllDto>();
+            foreach (var item in products)
+            {
+                var temp =await _productRepository.FindByIdAsync(item.SubProductID);
+               
+                listProduct.Add(new SubProductWithAllDto { Amount=item.Amount,ProductId=item.ProductID,SubProductId=item.SubProductID,ProductName=item.Product.ProductName,SubProductName= temp.ProductName });
+            }
+            return Ok(listProduct);
         }
     }
 }
