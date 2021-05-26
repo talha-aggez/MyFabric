@@ -33,7 +33,14 @@ namespace MyFabric.Controllers
         public async Task<IActionResult> GetOrdersFromAppUserId(int id)
         {
             var orderList = await _orderRepository.GetOrdersFromAppUserIdAsync(id);
-            return Ok(orderList);
+            var orderItemList = new List<OrderListDto>();
+            for(var i = 0; i<orderList.Count; i++)
+            {
+                for (var j = 0;  j<orderList[i].OrderItems.Count; j++)
+                    orderItemList.Add(new OrderListDto() { Amount = orderList[i].OrderItems[j].Amount,DeadLine = orderList[i].DeadLine,OrderDate= orderList[i].DeadLine,OrderID= orderList[i].ID,ProductID= orderList[i].OrderItems[j].ProductID,ProductName= orderList[i].OrderItems[j].Product.ProductName});
+            }
+            
+            return Ok(orderItemList);
         }
         
         [HttpGet("[action]/{id}")]
