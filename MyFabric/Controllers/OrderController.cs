@@ -53,16 +53,8 @@ namespace MyFabric.Controllers
                 orderDetails.OrderDate = DateTime.Now;
                 orderDetails.DeadLine = order.DeadLine;
                 orderDetails.CustomerID = order.AppUserId;
+                orderDetails.OrderItems = order.OrderItems;
                 await _orderRepository.AddAsync(orderDetails);
-                var temp = await _orderRepository.GetAllAsync();
-                var LastElementId=temp.Last();
-               foreach (var x in orderItems)
-                {
-                    x.OrderID = LastElementId.ID;
-                    orderDetails.OrderItems.Add(x);
-                    await _orderItemRepository.AddAsync(x);
-                }
-               
             }
            
             return Ok("Eklendi başarıyla");
