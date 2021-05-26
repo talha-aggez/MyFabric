@@ -35,6 +35,13 @@ namespace MyFabric.Controllers
             var orderList = await _orderRepository.GetOrdersFromAppUserIdAsync(id);
             return Ok(orderList);
         }
+        
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> GetOrderItemsFromOrderIdAsync(int id)
+        {
+            var orderItemList = await _orderItemRepository.GetOrderItemsFromOrderIdAsync(id);
+            return Ok(orderItemList);
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByID(int id)
@@ -81,6 +88,7 @@ namespace MyFabric.Controllers
             }
             return BadRequest("Order Bulunamadı");
         }
+
 
 
 
