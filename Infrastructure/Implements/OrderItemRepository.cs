@@ -16,7 +16,7 @@ namespace Infrastructure.Implements
         public async  Task<List<OrderItem>> GetOrderItemsFromOrderIdAsync(int orderId)
         {
             using var context = new StoreContext();
-            return await context.OrderItems.Where(P=>P.OrderID==orderId).ToListAsync();
+            return await context.OrderItems.Include(p=>p.Product).Where(P=>P.OrderID==orderId).ToListAsync();
         }
     }
 }
