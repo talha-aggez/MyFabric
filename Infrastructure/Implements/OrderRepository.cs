@@ -18,7 +18,7 @@ namespace Infrastructure.Implements
             using var context = new StoreContext();
    
    
-            return await context.Orders.Where(p=>p.CustomerID==customerId).ToListAsync();
+            return await context.Orders.Include(p=>p.OrderItems).Where(p=>p.CustomerID==customerId).ToListAsync();
         }
 
        
