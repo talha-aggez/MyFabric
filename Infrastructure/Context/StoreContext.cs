@@ -11,7 +11,7 @@ namespace Infrastructure.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            optionsBuilder.UseSqlServer("server=DESKTOP-3KEFFM2\\SQLEXPRESS; database=dbMyFabric; integrated security=true;");
+            optionsBuilder.UseSqlServer("server=DESKTOP-V6I8AQ6; database=dbMyFabric; integrated security=true;");
             //optionsBuilder.UseSqlServer("server=DESKTOP-3KEFFM2\\SQLEXPRESS; database=dbMyFabric; integrated security=true;");
 
 
