@@ -10,6 +10,7 @@ namespace Core.Interfaces
     public interface IOrderRepository : IGenericRepository<Order>
     {
         Task<List<Order>> GetOrdersFromAppUserIdAsync(int customerId);
+        Task<List<Order>> GetOrdersWithAllAsync();
 
     }
 }

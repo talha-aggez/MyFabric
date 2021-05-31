@@ -21,6 +21,12 @@ namespace Infrastructure.Implements
             return await context.Orders.Include(p=>p.OrderItems).ThenInclude(q=>q.Product).Where(p=>p.CustomerID==customerId).ToListAsync();
         }
 
-       
+        public async Task<List<Order>> GetOrdersWithAllAsync()
+        {
+            using var context = new StoreContext();
+
+
+            return await context.Orders.Include(p => p.OrderItems).ThenInclude(q => q.Product).ToListAsync();
+        }
     }
 }
