@@ -25,8 +25,16 @@ namespace MyFabric.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var productType = await _orderRepository.GetAllAsync();
-            return Ok(productType);
+            var orderList = await _orderRepository.GetAllAsync();
+           
+            var orderItemList = new List<OrderListDto>();
+            for (var i = 0; i < orderList.Count; i++)
+            {
+                for (var j = 0; j < orderList[i].OrderItems.Count; j++)
+                    orderItemList.Add(new OrderListDto() { Amount = orderList[i].OrderItems[j].Amount, DeadLine = orderList[i].DeadLine, OrderDate = orderList[i].OrderDate, OrderID = orderList[i].ID, ProductID = orderList[i].OrderItems[j].ProductID, ProductName = orderList[i].OrderItems[j].Product.ProductName });
+            }
+
+            return Ok(orderItemList);
         }
 
         [HttpGet("[action]/{id}")]
