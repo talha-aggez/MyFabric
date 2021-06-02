@@ -74,7 +74,7 @@ namespace MyFabric.Controllers
             });
             var roles = await _appUserRepository.GetRolesByUserName(appUserDto.Name);
             var tempToken = _jwtService.GenerateJWTToken(user, roles);
-            return Created("", new AppUserDto() { Id = appUser.ID, Name = appUserDto.Name, Password = appUserDto.Password, Token = tempToken,Roles=roles });
+            return Created("", new AppUserDto() { Id = user.ID, Name = appUserDto.Name, Password = appUserDto.Password, Token = tempToken,Roles=roles });
 
         }
         [HttpGet("[action]")]

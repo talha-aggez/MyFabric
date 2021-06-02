@@ -25,7 +25,7 @@ namespace MyFabric.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var orderList = await _orderRepository.GetAllAsync();
+            var orderList = await _orderRepository.GetOrdersWithAllAsync();
            
             var orderItemList = new List<OrderListDto>();
             for (var i = 0; i < orderList.Count; i++)
