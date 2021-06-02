@@ -29,7 +29,7 @@ namespace MyFabric.Controllers
             var products = await _productRepository.GetAllAsync();
             return Ok(products);
         }
-        [HttpGet("[action]")]
+        [HttpGet("[action]/{key}")]
         public async Task<IActionResult> SearchProducts(string key)
         {
             var products = await _productRepository.SearchProductAsync(key);
