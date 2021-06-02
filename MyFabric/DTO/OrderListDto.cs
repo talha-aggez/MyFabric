@@ -13,5 +13,6 @@ namespace MyFabric.DTO
         public int OrderID { get; set; }
         public int ProductID { get; set; }
         public int Amount { get; set; }
+        public string CustomerName { get; set; }
     }
 }

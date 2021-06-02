@@ -26,7 +26,7 @@ namespace Infrastructure.Implements
             using var context = new StoreContext();
 
 
-            return await context.Orders.Include(p => p.OrderItems).ThenInclude(q => q.Product).ToListAsync();
+            return await context.Orders.Include(p => p.OrderItems).ThenInclude(q => q.Product).Include(r=>r.AppUser).ToListAsync();
         }
     }
 }

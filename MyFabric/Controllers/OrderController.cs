@@ -30,8 +30,8 @@ namespace MyFabric.Controllers
             var orderItemList = new List<OrderListDto>();
             for (var i = 0; i < orderList.Count; i++)
             {
-                for (var j = 0; j < orderList[i].OrderItems.Count; j++)
-                    orderItemList.Add(new OrderListDto() { Amount = orderList[i].OrderItems[j].Amount, DeadLine = orderList[i].DeadLine, OrderDate = orderList[i].OrderDate, OrderID = orderList[i].ID, ProductID = orderList[i].OrderItems[j].ProductID, ProductName = orderList[i].OrderItems[j].Product.ProductName });
+                for (var j = 0; j < orderList[i].OrderItems.Count; j++) 
+                    orderItemList.Add(new OrderListDto() { CustomerName =orderList[i].AppUser.Name, Amount = orderList[i].OrderItems[j].Amount, DeadLine = orderList[i].DeadLine, OrderDate = orderList[i].OrderDate, OrderID = orderList[i].ID, ProductID = orderList[i].OrderItems[j].ProductID, ProductName = orderList[i].OrderItems[j].Product.ProductName });
             }
 
             return Ok(orderItemList);
@@ -40,12 +40,13 @@ namespace MyFabric.Controllers
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetOrdersFromAppUserId(int id)
         {
+
             var orderList = await _orderRepository.GetOrdersFromAppUserIdAsync(id);
             var orderItemList = new List<OrderListDto>();
             for(var i = 0; i<orderList.Count; i++)
             {
                 for (var j = 0;  j<orderList[i].OrderItems.Count; j++)
-                    orderItemList.Add(new OrderListDto() { Amount = orderList[i].OrderItems[j].Amount,DeadLine = orderList[i].DeadLine,OrderDate= orderList[i].OrderDate,OrderID= orderList[i].ID,ProductID= orderList[i].OrderItems[j].ProductID,ProductName= orderList[i].OrderItems[j].Product.ProductName});
+                    orderItemList.Add(new OrderListDto() {Amount = orderList[i].OrderItems[j].Amount,DeadLine = orderList[i].DeadLine,OrderDate= orderList[i].OrderDate,OrderID= orderList[i].ID,ProductID= orderList[i].OrderItems[j].ProductID,ProductName= orderList[i].OrderItems[j].Product.ProductName});
             }
             
             return Ok(orderItemList);
