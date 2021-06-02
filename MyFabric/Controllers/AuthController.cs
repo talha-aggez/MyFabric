@@ -46,7 +46,7 @@ namespace MyFabric.Controllers
                 {
                     var roles = await _appUserRepository.GetRolesByUserName(userLoginDto.Name);
                     var tempToken = _jwtService.GenerateJWTToken(appUser, roles);
-                    return Created("", new AppUserDto(){Name=userLoginDto.Name,Password=userLoginDto.Password,Token=tempToken,Roles = roles });
+                    return Created("", new AppUserDto(){Id=appUser.ID,Name=userLoginDto.Name,Password=userLoginDto.Password,Token=tempToken,Roles = roles });
                 }
                 return BadRequest("Kullanıcı adı veya şifre hatalı");
             }
@@ -74,7 +74,7 @@ namespace MyFabric.Controllers
             });
             var roles = await _appUserRepository.GetRolesByUserName(appUserDto.Name);
             var tempToken = _jwtService.GenerateJWTToken(user, roles);
-            return Created("", new AppUserDto() { Name = appUserDto.Name, Password = appUserDto.Password, Token = tempToken,Roles=roles });
+            return Created("", new AppUserDto() { Id = appUser.ID, Name = appUserDto.Name, Password = appUserDto.Password, Token = tempToken,Roles=roles });
 
         }
         [HttpGet("[action]")]
