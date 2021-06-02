@@ -30,6 +30,12 @@ namespace MyFabric.Controllers
             return Ok(products);
         }
         [HttpGet("[action]")]
+        public async Task<IActionResult> SearchProducts(string key)
+        {
+            var products = await _productRepository.SearchProductAsync(key);
+            return Ok(products);
+        }
+        [HttpGet("[action]")]
         public async Task<IActionResult> GetProductWithProductType()
         {
             var products = await _productRepository.GetProductWithProductTypeAsync();
@@ -102,3 +108,4 @@ namespace MyFabric.Controllers
 
     }
 }
+

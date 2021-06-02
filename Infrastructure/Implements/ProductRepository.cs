@@ -33,5 +33,12 @@ namespace Infrastructure.Implements
 
 
         }
+
+        public async Task<List<Product>> SearchProductAsync(string key)
+        {
+            using var context = new StoreContext();
+            return await context.Products.Where(x => x.ProductName.Contains(key)).ToListAsync();
+
+        }
     }
 }
