@@ -14,6 +14,8 @@ namespace Core.DBModels
         public virtual List<OrderItem> OrderItems { get; set; }
         public ProductType ProductType { get; set; }
         public virtual List<SubProductTree> SubProductTrees{ get; set; }
+
+        public virtual List<Schedule> Schedules { get; set; }
         //public virtual List<Product> SubProducts { get; set; }
     }
 }

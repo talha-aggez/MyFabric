@@ -31,5 +31,6 @@ namespace Infrastructure.Context
         public DbSet<WorkCenter> WorkCenters { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<WorkCenterOperation> WorkCenterOperations { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
     }
 }

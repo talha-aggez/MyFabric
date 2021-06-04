@@ -17,11 +17,13 @@ namespace MyFabric.Controllers
         private readonly IOrderRepository _orderRepository;
         private readonly IOrderItemRepository _orderItemRepository;
         private readonly ISubProductTreeRepository _subProductTreeRepository;
-        public OrderController(IOrderRepository orderRepository, IOrderItemRepository orderItemRepository, ISubProductTreeRepository subProductTreeRepository)
+        private readonly IProductRepository _productRepository;
+        public OrderController(IOrderRepository orderRepository, IOrderItemRepository orderItemRepository, ISubProductTreeRepository subProductTreeRepository, IProductRepository productRepository)
         {
             _orderRepository = orderRepository;
             _orderItemRepository = orderItemRepository;
             _subProductTreeRepository = subProductTreeRepository;
+            _productRepository = productRepository;
         }
 
         [HttpGet]
@@ -38,7 +40,7 @@ namespace MyFabric.Controllers
 
             return Ok(orderItemList);
         }
-        [HttpGet]
+        [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetOrderItemsAndSubProductsByOrderId(int id)
         {
             var orderItemList = await _orderItemRepository.GetOrderItemsFromOrderIdAsync(id);
@@ -47,11 +49,13 @@ namespace MyFabric.Controllers
             foreach (var item in orderItemList)
             {
                var temp= await _subProductTreeRepository.GetSubProductsByProductId(item.ProductID);
+                subProducts = new List<SubProductDto>();
                 foreach (var item2 in temp)
                 {
-                    subProducts.Add(new SubProductDto { SubProductId = item2.ProductID, SubProductName = item2.Product.ProductName, Amount = item2.Amount });
+                    var subProductName = await _productRepository.FindByIdAsync(item2.SubProductID);
+                    subProducts.Add(new SubProductDto { SubProductId = item2.SubProductID, SubProductName = subProductName.ProductName , Amount = item2.Amount });
                 }
-                tempList.Add(new OrderWithSubProductsDto { ProductId = item.ProductID, SubProducts = subProducts });
+                tempList.Add(new OrderWithSubProductsDto { ProductId = item.ProductID, ProductName = item.Product.ProductName , SubProducts = subProducts });
             }
 
             return Ok(tempList);

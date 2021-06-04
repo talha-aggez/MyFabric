@@ -4,14 +4,15 @@ using System.Text;
 
 namespace Core.DBModels
 {
-    public class WorkCenterOperation
+    public class Schedule
     {
         public int ID { get; set; }
+        public int ProductID { get; set; }
         public int WorkCenterID { get; set; }
-        public int OperationID { get; set; }
-        public double Speed { get; set; }
+        public int OrderID { get; set; }
+
         public WorkCenter? WorkCenter { get; set; }
-        public Operation Operation { get; set; }
-        public virtual List<Schedule> Schedules { get; set; }
+        public Product Product { get; set; }
+        public Order Order { get; set; }
     }
 }

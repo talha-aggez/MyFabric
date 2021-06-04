@@ -13,5 +13,6 @@ namespace Core.DBModels
         public DateTime? DeadLine { get; set; }
         public AppUser AppUser { get; set; }
         public virtual List<OrderItem> OrderItems { get; set; }
+        public virtual List<Schedule> Schedules { get; set; }
     }
 }

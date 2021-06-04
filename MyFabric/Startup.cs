@@ -58,7 +58,7 @@ namespace MyFabric
             services.AddScoped<ISubProductTreeRepository, SubProductTreeRepository>();
             services.AddScoped<IWorkCenterRepository, WorkCenterRepository>();
             services.AddScoped<IWorkCenterOperationRepository, WorkCenterOperationRepository>();
-
+            services.AddScoped<IScheduleRepository, ScheduleRepository>();
 
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
