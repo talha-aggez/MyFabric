@@ -16,10 +16,12 @@ namespace MyFabric.Controllers
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IOrderItemRepository _orderItemRepository;
-        public OrderController(IOrderRepository orderRepository, IOrderItemRepository orderItemRepository)
+        private readonly ISubProductTreeRepository _subProductTreeRepository;
+        public OrderController(IOrderRepository orderRepository, IOrderItemRepository orderItemRepository, ISubProductTreeRepository subProductTreeRepository)
         {
             _orderRepository = orderRepository;
             _orderItemRepository = orderItemRepository;
+            _subProductTreeRepository = subProductTreeRepository;
         }
 
         [HttpGet]
@@ -35,6 +37,24 @@ namespace MyFabric.Controllers
             }
 
             return Ok(orderItemList);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetOrderItemsAndSubProductsByOrderId(int id)
+        {
+            var orderItemList = await _orderItemRepository.GetOrderItemsFromOrderIdAsync(id);
+            var tempList = new List<OrderWithSubProductsDto>();
+            var subProducts = new List<SubProductDto>();
+            foreach (var item in orderItemList)
+            {
+               var temp= await _subProductTreeRepository.GetSubProductsByProductId(item.ProductID);
+                foreach (var item2 in temp)
+                {
+                    subProducts.Add(new SubProductDto { SubProductId = item2.ProductID, SubProductName = item2.Product.ProductName, Amount = item2.Amount });
+                }
+                tempList.Add(new OrderWithSubProductsDto { ProductId = item.ProductID, SubProducts = subProducts });
+            }
+
+            return Ok(tempList);
         }
 
         [HttpGet("[action]/{id}")]
@@ -105,6 +125,7 @@ namespace MyFabric.Controllers
             }
             return BadRequest("Order Bulunamadı");
         }
+
 
 
 
