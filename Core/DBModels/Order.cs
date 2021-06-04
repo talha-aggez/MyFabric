@@ -8,6 +8,7 @@ namespace Core.DBModels
     {
         public int ID { get; set; }
         public int CustomerID { get; set; }
+        public int AppUserID { get; set; }
         public DateTime? OrderDate { get; set; }
         public DateTime? DeadLine { get; set; }
         public AppUser AppUser { get; set; }

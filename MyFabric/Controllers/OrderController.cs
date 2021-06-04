@@ -76,6 +76,7 @@ namespace MyFabric.Controllers
                 orderDetails.OrderDate = DateTime.Now;
                 orderDetails.DeadLine = order.DeadLine;
                 orderDetails.CustomerID = order.AppUserId;
+                orderDetails.AppUserID = order.AppUserId;
                 orderDetails.OrderItems = order.OrderItems;
                 await _orderRepository.AddAsync(orderDetails);
             }
