@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20210604164222_ScheduleTable")]
-    partial class ScheduleTable
+    [Migration("20210604171428_addscheduletable")]
+    partial class addscheduletable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

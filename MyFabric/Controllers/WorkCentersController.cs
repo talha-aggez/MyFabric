@@ -2,6 +2,7 @@
 using Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyFabric.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,19 @@ namespace MyFabric.Controllers
         {
             var workCenter = await _workCenterRepository.GetAllAsync();
             return Ok(workCenter);
+        }
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> GetWorkCenterWithProductId(int productId)
+        {
+            var workCenterList = await _workCenterRepository.GetWorkCenterWithProductIdAsync(productId);
+            var models = new List<WorkCenterListDto>();
+            foreach (var item in workCenterList)
+            {
+
+                var model = new WorkCenterListDto { WorkCenterId = item.ID, WorkCenterName = item.WorkCenterName };
+                models.Add(model);
+            }
+            return Ok(models);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByID(int id)
