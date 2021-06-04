@@ -10,6 +10,7 @@ namespace Core.Interfaces
     public interface ISubProductTreeRepository : IGenericRepository<SubProductTree>
     {
         Task<List<SubProductTree>> GetSubProductTreeWithAllAsync();
+        Task<List<SubProductTree>> GetSubProductsByProductId(int id);
 
     }
 }
