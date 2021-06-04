@@ -9,5 +9,6 @@ namespace MyFabric.DTO
     {
         public int WorkCenterId { get; set; }
         public string WorkCenterName { get; set; }
+        public double Speed { get; set; }
     }
 }
