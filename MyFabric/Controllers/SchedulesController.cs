@@ -19,7 +19,13 @@ namespace MyFabric.Controllers
          {
             _scheduleRepository = scheduleRepository;
          }
-
+        [HttpGet]
+        public async Task<IActionResult> GetScheduleByOrderIdAndProductId(int orderId, int productId)
+        {
+            var schedules = await _scheduleRepository.GetScheduleByOrderIdAndProductIdAsync(orderId, productId);
+            return Ok(schedules);
+        }
+        
          [HttpGet]
          public async Task<IActionResult> GetAll()
          {
@@ -45,6 +51,8 @@ namespace MyFabric.Controllers
             {
                 await _scheduleRepository.AddAsync(new Schedule {OrderID=item.OrderID,ProductID=item.ProductID,WorkCenterID=item.WorkCenterID, Speed=item.Speed});
             }
+
+
            
             return Ok("Eklendi başarıyla");
         }
