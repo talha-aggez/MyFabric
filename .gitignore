@@ -365,3 +365,4 @@ FodyWeavers.xsd
 /Infrastructure/Migrations/20210522161808_jwt.Designer.cs
 /Infrastructure/Migrations/20210605183745_addSpeed.cs
 /Infrastructure/Migrations/20210605183745_addSpeed.Designer.cs
+/Infrastructure/Migrations/20210605190422_db_initialize.Designer.cs
