@@ -48,7 +48,7 @@ namespace MyFabric.Controllers
            
             return Ok("Eklendi başarıyla");
         }
-
+        //deneme
         [HttpPut]
          public async Task<IActionResult> UpdateWorkCenter(Schedule workCenter)
          {
