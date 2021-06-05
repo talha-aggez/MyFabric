@@ -47,10 +47,16 @@ namespace MyFabric.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> CreateScheduleByScheduleList(List<ScheduleDto> schedules)
         {
+            var scheduleAllList =await _scheduleRepository.GetAllAsync();
+
+            
             foreach (var item in schedules)
             {
+                if(item.)
                 await _scheduleRepository.AddAsync(new Schedule {OrderID=item.OrderID,ProductID=item.ProductID,WorkCenterID=item.WorkCenterID, Speed=item.Speed});
             }
+
+
 
 
            
