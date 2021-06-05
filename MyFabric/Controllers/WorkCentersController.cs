@@ -26,15 +26,15 @@ namespace MyFabric.Controllers
             var workCenter = await _workCenterRepository.GetAllAsync();
             return Ok(workCenter);
         }
-        [HttpGet("[action]/{id}")]
+        [HttpGet("[action]/{productId}")]
         public async Task<IActionResult> GetWorkCenterWithProductId(int productId)
         {
             var workCenterList = await _workCenterRepository.GetWorkCenterWithProductIdAsync(productId);
             var models = new List<WorkCenterListDto>();
             foreach (var item in workCenterList)
             {
-
-                var model = new WorkCenterListDto { WorkCenterId = item.ID, WorkCenterName = item.WorkCenterName };
+                var speed = item.WorkCenterOperations.Where(p => p.WorkCenterID == item.ID).FirstOrDefault().Speed;
+                var model = new WorkCenterListDto { WorkCenterId = item.ID, WorkCenterName = item.WorkCenterName , Speed = speed };
                 models.Add(model);
             }
             return Ok(models);

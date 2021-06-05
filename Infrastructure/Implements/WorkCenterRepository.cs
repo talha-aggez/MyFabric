@@ -16,7 +16,7 @@ namespace Infrastructure.Implements
         public async Task<List<WorkCenter>> GetWorkCenterWithProductIdAsync(int productId)
         {
             using var context = new StoreContext();
-            var x= await context.Products.Include(p => p.ProductType).ThenInclude(p => p.Operations).ThenInclude(p => p.WorkCenterOperations).ThenInclude(p => p.WorkCenter).Where(p => p.ID == productId).Where(p => p.ID == productId).ToListAsync();
+            var x= await context.Products.Include(p => p.ProductType).ThenInclude(p => p.Operations).ThenInclude(p => p.WorkCenterOperations).ThenInclude(p => p.WorkCenter).Where(p => p.ID == productId).ToListAsync();
             var workCenterList = new List<WorkCenter>();
             foreach (var item in x)
             {
@@ -25,7 +25,8 @@ namespace Infrastructure.Implements
                 {
                     foreach (var item3 in item2.WorkCenterOperations)
                     {
-                        workCenterList.Add(item3.WorkCenter);
+                        if(item3.WorkCenter.Active == false)
+                             workCenterList.Add(item3.WorkCenter);
                     }
 
                 }
