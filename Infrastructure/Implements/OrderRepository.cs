@@ -13,6 +13,12 @@ namespace Infrastructure.Implements
 {
     public class OrderRepository : GenericRepository<Order>, IOrderRepository
     {
+        public async Task<Order> FindByIDWithOrderItemsAsync(int id)
+        {
+            using var context = new StoreContext();
+            return await context.Orders.Include(p => p.OrderItems).Where(p => p.ID == id).FirstOrDefaultAsync();
+        }
+
         public async Task<List<Order>> GetOrdersFromAppUserIdAsync(int customerId)
         {
             using var context = new StoreContext();

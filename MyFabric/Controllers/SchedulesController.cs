@@ -16,10 +16,14 @@ namespace MyFabric.Controllers
 
         private readonly IScheduleRepository _scheduleRepository;
         private readonly IWorkCenterRepository _workCenterRepository;
-        public SchedulesController(IScheduleRepository scheduleRepository,IWorkCenterRepository workCenterRepository)
+        private readonly IOrderRepository _orderRepository;
+        private readonly ISubProductTreeRepository _subProductTreeRepository;
+        public SchedulesController(IScheduleRepository scheduleRepository, IWorkCenterRepository workCenterRepository, IOrderRepository orderRepository, ISubProductTreeRepository subProductTreeRepository)
         {
             _scheduleRepository = scheduleRepository;
             _workCenterRepository = workCenterRepository;
+            _orderRepository = orderRepository;
+            _subProductTreeRepository = subProductTreeRepository;
         }
         [HttpGet("[action]")]
         public async Task<IActionResult> GetScheduleByOrderIdAndProductId(int orderId, int productId)
@@ -50,7 +54,7 @@ namespace MyFabric.Controllers
         public async Task<IActionResult> CreateScheduleByScheduleList(List<ScheduleDto> schedules)
         {
             var scheduleAllList = await _scheduleRepository.GetAllAsync();
-
+            var tempTime = 0;
 
             foreach (var item2 in schedules)
             {
@@ -58,16 +62,26 @@ namespace MyFabric.Controllers
                 if (temp.Count == 0)
                 {
                     await _scheduleRepository.AddAsync(new Schedule { OrderID = item2.OrderID, ProductID = item2.ProductID, WorkCenterID = item2.WorkCenterID, Speed = item2.Speed });
+                    var order = await _orderRepository.FindByIDWithOrderItemsAsync(item2.OrderID);
+                    var orderItem = order.OrderItems.Where(p => p.ProductID == item2.UstUrun).FirstOrDefault();
+                    if (orderItem != null)
+                    {
+                        var test = await _subProductTreeRepository.GetSubProductsByProductId(item2.UstUrun);
+                        var test2 = test.Where(p => p.SubProductID == item2.ProductID).FirstOrDefault();
+                        tempTime += orderItem.Amount * (int)item2.Speed * test2.Amount;
+                    }
                     var workCenter = await _workCenterRepository.FindByIdAsync(item2.WorkCenterID);
                     workCenter.Active = true;
                     await _workCenterRepository.UpdateAsync(workCenter);
                 }
                 else
                 {
-                    await _scheduleRepository.UpdateAsync(new Schedule { ID = temp.FirstOrDefault().ID ,OrderID =  item2.OrderID, ProductID = item2.ProductID, WorkCenterID = item2.WorkCenterID, Speed = item2.Speed  });
+                    await _scheduleRepository.UpdateAsync(new Schedule { ID = temp.FirstOrDefault().ID, OrderID = item2.OrderID, ProductID = item2.ProductID, WorkCenterID = item2.WorkCenterID, Speed = item2.Speed });
                 }
             }
-
+            var tempOrder = await _orderRepository.FindByIdAsync(schedules[0].OrderID);
+            tempOrder.DeadLine = DateTime.Now.AddMinutes(tempTime);
+            await _orderRepository.UpdateAsync(tempOrder);
             return Ok("Eklendi başarıyla");
         }
         //deneme
