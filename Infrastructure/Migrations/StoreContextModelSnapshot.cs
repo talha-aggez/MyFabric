@@ -196,6 +196,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("ProductID")
                         .HasColumnType("int");
 
+                    b.Property<double>("Speed")
+                        .HasColumnType("float");
+
                     b.Property<int>("WorkCenterID")
                         .HasColumnType("int");
 

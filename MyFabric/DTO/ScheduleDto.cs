@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Core.DBModels
+namespace MyFabric.DTO
 {
-    public class Schedule
+    public class ScheduleDto
     {
         public int ID { get; set; }
         public int ProductID { get; set; }
         public int WorkCenterID { get; set; }
         public int OrderID { get; set; }
         public double Speed { get; set; }
-
-        public WorkCenter? WorkCenter { get; set; }
-        public Product Product { get; set; }
-        public Order Order { get; set; }
     }
 }

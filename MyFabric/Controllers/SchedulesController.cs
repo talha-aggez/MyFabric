@@ -1,6 +1,7 @@
 ﻿using Core.DBModels;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using MyFabric.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,18 @@ namespace MyFabric.Controllers
             await _scheduleRepository.AddAsync(workCenter);
              return Ok("Eklendi başarıyla");
          }
-         [HttpPut]
+        [HttpPost]
+        public async Task<IActionResult> CreateScheduleByScheduleList(List<ScheduleDto> schedules)
+        {
+            foreach (var item in schedules)
+            {
+                await _scheduleRepository.AddAsync(new Schedule {ID=item.ID,OrderID=item.OrderID,ProductID=item.ProductID,WorkCenterID=item.WorkCenterID, Speed=item.Speed});
+            }
+           
+            return Ok("Eklendi başarıyla");
+        }
+
+        [HttpPut]
          public async Task<IActionResult> UpdateWorkCenter(Schedule workCenter)
          {
              var tempproductTypeRepository = await _scheduleRepository.FindByIdAsync(workCenter.ID);
