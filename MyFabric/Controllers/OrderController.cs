@@ -142,6 +142,14 @@ namespace MyFabric.Controllers
             return Ok(mostActiveCustomers);
         }
         [HttpGet("[action]")]
+        public async Task<IActionResult> GetMostActive3Product()
+        {
+            var mostActiveProducts = await _orderRepository.GetMostActive3ProductAsync();
+            return Ok(mostActiveProducts);
+        }
+
+
+        [HttpGet("[action]")]
         public async Task<IActionResult> GetTotalOrderCount()
         {
             var totalOrderCount =  _orderRepository.GetTotalOrderCountAsync();

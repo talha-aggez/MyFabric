@@ -14,6 +14,7 @@ namespace Core.Interfaces
         Task<int> GetTodayOrderCountAsync();
         int GetTotalOrderCountAsync();
         Task<List<DualHelper>> GetMostActive3PersonAsync();
+        Task<List<DualHelper>> GetMostActive3ProductAsync();
         Task<Order> FindByIDWithOrderItemsAsync(int id);
 
     }

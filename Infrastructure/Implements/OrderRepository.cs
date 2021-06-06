@@ -23,12 +23,24 @@ namespace Infrastructure.Implements
         {
             using var context = new StoreContext();
            
-            var list = context.Orders.Include(p => p.AppUser).GroupBy(p => p.AppUser.Name).OrderByDescending(p => p.Count()).Take(3).
+            var list =await  context.Orders.Include(p => p.AppUser).GroupBy(p => p.AppUser.Name).OrderByDescending(p => p.Count()).Take(3).
                Select(p => new DualHelper
                {
                    Name = p.Key,
                    Number = p.Count()
-               }).ToList();
+               }).ToListAsync();
+            return list;
+        }
+
+        public async Task<List<DualHelper>> GetMostActive3ProductAsync()
+        {
+            using var context = new StoreContext();
+            var list =await context.OrderItems.Include(p => p.Product).GroupBy(p => p.Product.ProductName).OrderByDescending(p => p.Count()).Take(3).
+              Select(p => new DualHelper
+              {
+                  Name = p.Key,
+                  Number = p.Count()
+              }).ToListAsync();
             return list;
         }
 
