@@ -13,7 +13,7 @@ namespace MyFabric.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   
+
     public class ProductsController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
@@ -23,6 +23,14 @@ namespace MyFabric.Controllers
         }
 
         [HttpGet]
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetTotalProductCount()
+        {
+            var productCount = _productRepository.GetTotalProductCount();
+            return Ok(productCount);
+        }
+
         //[Authorize]
         public async Task<IActionResult> GetAll()
         {
@@ -42,7 +50,7 @@ namespace MyFabric.Controllers
             List<ProductWithProductTypeDto> listProduct = new List<ProductWithProductTypeDto>();
             foreach (var item in products)
             {
-                listProduct.Add(new ProductWithProductTypeDto { ProductName=item.ProductName,IsSalable=item.IsSalable,ProductId=item.ID,ProductTypeID=item.ProductTypeID,ProductTypeName=item.ProductType.Name});
+                listProduct.Add(new ProductWithProductTypeDto { ProductName = item.ProductName, IsSalable = item.IsSalable, ProductId = item.ID, ProductTypeID = item.ProductTypeID, ProductTypeName = item.ProductType.Name });
             }
             return Ok(listProduct);
         }

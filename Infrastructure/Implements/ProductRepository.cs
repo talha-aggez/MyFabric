@@ -34,6 +34,12 @@ namespace Infrastructure.Implements
 
         }
 
+        public int GetTotalProductCount()
+        {
+            using var context = new StoreContext();
+            return context.Products.Count(); 
+        }
+
         public async Task<List<Product>> SearchProductAsync(string key)
         {
             using var context = new StoreContext();

@@ -13,6 +13,7 @@ namespace Core.Interfaces
         Task<List<Product>> GetProductNotSalableAsync();
         Task<List<Product>> GetProductSalableAsync();
         Task<List<Product>> SearchProductAsync(string key);
+        int GetTotalProductCount();
 
     }
 }
