@@ -33,7 +33,7 @@ namespace MyFabric.Controllers
             return Ok(workCenterCount);
         }
         [HttpGet("[action]")]
-        public async Task<IActionResult> c()
+        public async Task<IActionResult> GetActiveWorkCenterTotalCount()
         {
             var workCenterCount = _workCenterRepository.GetActiveWorkCenterTotalCount();
             return Ok(workCenterCount);
