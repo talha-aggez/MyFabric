@@ -18,12 +18,18 @@ namespace MyFabric.Controllers
         {
             _appUserRepository = appUserRepository;
         }
-
+        
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var appUser = await _appUserRepository.GetAllAsync();
             return Ok(appUser);
+        }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetTotalCustomerCount()
+        {
+            var customerCount =  _appUserRepository.GetTotalCustomerCount();
+            return Ok(customerCount);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByID(int id)

@@ -13,5 +13,6 @@ namespace Core.Interfaces
         Task<AppUser> FindByUserName(string userName);
         Task<bool> CheckPassword(string name,string password);
         Task<List<AppRole>> GetRolesByUserName(string userName);
+        int GetTotalCustomerCount();
     }
 }

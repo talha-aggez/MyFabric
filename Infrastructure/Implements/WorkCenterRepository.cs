@@ -13,6 +13,18 @@ namespace Infrastructure.Implements
 {
     public class WorkCenterRepository : GenericRepository<WorkCenter>, IWorkCenterRepository
     {
+        public int GetActiveWorkCenterTotalCount()
+        {
+            using var context = new StoreContext();
+            return context.WorkCenters.Where(p=>p.Active==true).Count();
+        }
+
+        public int GetWorkCenterTotalCount()
+        {
+            using var context = new StoreContext();
+            return context.WorkCenters.Count();
+        }
+
         public async Task<List<WorkCenter>> GetWorkCenterWithProductIdAsync(int productId)
         {
             using var context = new StoreContext();

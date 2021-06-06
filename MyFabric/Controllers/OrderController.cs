@@ -129,8 +129,25 @@ namespace MyFabric.Controllers
             }
             return BadRequest("Order Bulunamadı");
         }
-
-
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetTodayOrderCount()
+        {
+            var orderCountToday = await _orderRepository.GetTodayOrderCountAsync();
+            return Ok(orderCountToday);
+        }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetMostActive3Person()
+        {
+            var mostActiveCustomers = await _orderRepository.GetMostActive3PersonAsync();
+            return Ok(mostActiveCustomers);
+        }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetTotalOrderCount()
+        {
+            var totalOrderCount =  _orderRepository.GetTotalOrderCountAsync();
+            return Ok(totalOrderCount);
+        }
+        
 
 
 

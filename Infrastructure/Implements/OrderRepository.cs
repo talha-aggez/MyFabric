@@ -19,6 +19,19 @@ namespace Infrastructure.Implements
             return await context.Orders.Include(p => p.OrderItems).Where(p => p.ID == id).FirstOrDefaultAsync();
         }
 
+        public async  Task<List<DualHelper>> GetMostActive3PersonAsync()
+        {
+            using var context = new StoreContext();
+           
+            var list = context.Orders.Include(p => p.AppUser).GroupBy(p => p.AppUser.Name).OrderByDescending(p => p.Count()).Take(3).
+               Select(p => new DualHelper
+               {
+                   Name = p.Key,
+                   Number = p.Count()
+               }).ToList();
+            return list;
+        }
+
         public async Task<List<Order>> GetOrdersFromAppUserIdAsync(int customerId)
         {
             using var context = new StoreContext();
@@ -33,6 +46,22 @@ namespace Infrastructure.Implements
 
 
             return await context.Orders.Include(p => p.OrderItems).ThenInclude(q => q.Product).Include(r=>r.AppUser).ToListAsync();
+        }
+
+        public async  Task<int> GetTodayOrderCountAsync()
+        {
+            using var context = new StoreContext();
+       
+            var todayOrderCount =context.Orders.Where(p => p.OrderDate.Day == DateTime.Now.Day && p.OrderDate.Month==DateTime.Now.Month && p.OrderDate.Year == DateTime.Now.Year).Count();
+            return todayOrderCount;
+          
+        
+        }
+
+        public int GetTotalOrderCountAsync()
+        {
+            using var context = new StoreContext();
+            return  context.Orders.Count();
         }
     }
 }

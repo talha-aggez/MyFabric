@@ -26,6 +26,18 @@ namespace MyFabric.Controllers
             var workCenter = await _workCenterRepository.GetAllAsync();
             return Ok(workCenter);
         }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetWorkCenterTotalCount()
+        {
+            var workCenterCount =  _workCenterRepository.GetWorkCenterTotalCount();
+            return Ok(workCenterCount);
+        }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> c()
+        {
+            var workCenterCount = _workCenterRepository.GetActiveWorkCenterTotalCount();
+            return Ok(workCenterCount);
+        }
         [HttpGet("[action]/{productId}")]
         public async Task<IActionResult> GetWorkCenterWithProductId(int productId)
         {

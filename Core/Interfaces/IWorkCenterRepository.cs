@@ -10,5 +10,7 @@ namespace Core.Interfaces
     public interface IWorkCenterRepository : IGenericRepository<WorkCenter>
     {
         Task<List<WorkCenter>> GetWorkCenterWithProductIdAsync(int productId);
+        int GetWorkCenterTotalCount();
+        int GetActiveWorkCenterTotalCount();
     }
 }

@@ -54,5 +54,20 @@ namespace Infrastructure.Implements
 
                     }).ToListAsync();
         }
+
+        public int GetTotalCustomerCount()
+        {
+            using var context = new StoreContext();
+            var userList =  context.AppUserRoles.Include(p => p.AppUser).ToList();
+            var count = 0;
+            foreach (var item in userList)
+            {
+                if (item.AppRoleId == 2)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
     }
 }
