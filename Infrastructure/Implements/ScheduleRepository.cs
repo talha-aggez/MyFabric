@@ -16,7 +16,7 @@ namespace Infrastructure.Implements
         public async Task<List<Schedule>> GetScheduleByOrderIdAndProductIdAsync(int orderId, int productId)
         {
             using var context = new StoreContext();
-            return await context.Schedules.Where(p => p.ProductID==productId && p.OrderID==orderId).ToListAsync();
+            return await context.Schedules.Include(p => p.WorkCenter).Where(p => p.ProductID==productId && p.OrderID==orderId).ToListAsync();
         }
     }
 }

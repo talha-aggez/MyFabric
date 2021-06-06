@@ -10,6 +10,7 @@ namespace MyFabric.DTO
         public int ID { get; set; }
         public int ProductID { get; set; }
         public int WorkCenterID { get; set; }
+        public int UstUrun { get; set; }
         public int OrderID { get; set; }
         public double Speed { get; set; }
     }
